@@ -11,6 +11,7 @@ class Karyawan extends CI_Controller
 		parent::__construct();
 		date_default_timezone_set('Asia/Jakarta');
 		$this->load->model('absen_model');
+		$this->load->model('keterangan_model');
 	}
 
 
@@ -39,6 +40,72 @@ class Karyawan extends CI_Controller
 				'status' => 404
 			];
 			echo json_encode($response);
+		}
+	}
+
+	public function insertIzin()
+	{
+		$config['upload_path']          = './uploads/lampiran/';
+		$config['allowed_types']        = 'jpg|png|jpeg';
+		$config['max_size']             = 5000;
+
+
+		$this->load->library('upload', $config);
+		if (!$this->upload->do_upload('lampiran')) {
+			$response = [
+				'code' => 404,
+				'message' => 'Format file tidak sesuai'
+			];
+			echo json_encode($response);
+		} else {
+
+			$data = array('upload_data' => $this->upload->data());
+
+
+			$file_name = $data['upload_data']['file_name'];
+			$source_path = './uploads/lampiran/' . $data['upload_data']['file_name'];
+			$dir_path = $_SERVER['DOCUMENT_ROOT'] . '/absensi/karyawan/modul/karyawan/images/';
+			if (!is_dir($dir_path)) {
+				mkdir($dir_path, 0777, true);
+			}
+
+			$destination_path = $dir_path . $file_name;
+
+			if (file_exists($source_path)) {
+				if (copy($source_path, $destination_path)) {
+				} else {
+					$response = [
+						'code' => 404,
+						'message' => 'Terjadi kesalahan'
+					];
+					echo json_encode($response);
+				}
+			}
+
+			$data = [
+				'id_karyawan' => $this->input->post('id_karyawan'),
+				'nama' => $this->input->post('nama'),
+				'keterangan' => $this->input->post('keterangan'),
+				'alasan' => $this->input->post('alasan'),
+				'waktu' => $this->input->post('waktu'),
+				'bukti' => $file_name
+			];
+
+
+
+			$insert =  $this->keterangan_model->insert($data);
+			if ($insert == true) {
+				$response = [
+					'status' => 200
+				];
+				echo json_encode($response);
+			} else {
+				$response = [
+					'status' => 404,
+					'message' => 'Terjadi kesalahan'
+				];
+				echo json_encode($response);
+			}
 		}
 	}
 }
