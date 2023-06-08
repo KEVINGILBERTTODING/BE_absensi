@@ -1,23 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-
-/**
- *
- * Controller Auth
- *
- * This controller for ...
- *
- * @package   CodeIgniter
- * @category  Controller CI
- * @author    Setiawan Jodi <jodisetiawan@fisip-untirta.ac.id>
- * @author    Raul Guerrero <r.g.c@me.com>
- * @link      https://github.com/setdjod/myci-extension/
- * @param     ...
- * @return    ...
- *
- */
-
 class Auth extends CI_Controller
 {
 
@@ -36,7 +19,11 @@ class Auth extends CI_Controller
 		if ($validateKaryawan != null) {
 			if (md5($password) == $validateKaryawan['password']) {
 				$response = [
-					'status' => 200
+					'status' => 200,
+					'nama' => $validateKaryawan['nama'],
+					'user_id' => $validateKaryawan['id_karyawan'],
+					'role' => 2,
+					'jabatan' => $validateKaryawan['jabatan']
 				];
 				echo json_encode($response);
 			} else {
