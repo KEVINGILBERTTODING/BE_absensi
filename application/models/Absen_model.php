@@ -19,6 +19,16 @@ class Absen_model extends CI_Model
 		$this->db->order_by('id', 'desc');
 		return $this->db->get()->result();
 	}
+
+	public function insertAbsen($data)
+	{
+		$insert = $this->db->insert('tb_absen', $data);
+		if ($insert) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 /* End of file Absen_model.php */
