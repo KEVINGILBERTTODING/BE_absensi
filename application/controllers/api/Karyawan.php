@@ -12,6 +12,8 @@ class Karyawan extends CI_Controller
 		date_default_timezone_set('Asia/Jakarta');
 		$this->load->model('absen_model');
 		$this->load->model('keterangan_model');
+		$this->load->model('jabatan_model');
+		$this->load->model('karyawan_model');
 	}
 
 
@@ -107,6 +109,147 @@ class Karyawan extends CI_Controller
 				echo json_encode($response);
 			}
 		}
+	}
+
+	public function getAllJabatan()
+	{
+		echo json_encode($this->jabatan_model->getAllJabatan());
+	}
+	public function editProfile()
+	{
+		$id = $this->input->post('id');
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+
+		$validateUsername = $this->karyawan_model->auth($username, 'tb_karyawan');
+		if ($validateUsername != null) {
+			if ($validateUsername['id_karyawan'] == $id) {
+				if ($password == '') {
+					$data = [
+						'username' => $username,
+						'password' => $password,
+						'nama' => $this->input->post('nama'),
+						'tmp_tgl_lahir' => $this->input->post('tmp_tgl_lahir'),
+						'jenkel' => $this->input->post('jenkel'),
+						'agama' => $this->input->post('agama'),
+						'alamat' => $this->input->post('alamat'),
+						'no_tel' => $this->input->post('no_tel'),
+						'jabatan' => $this->input->post('jabatan')
+					];
+
+					$update = $this->karyawan_model->edit($id, $data);
+					if ($update == true) {
+						$response = [
+							'status' => 200
+						];
+						echo json_encode($response);
+					} else {
+						$response = [
+							'status' => 404,
+							'message' => 'Terjadi kesalahan'
+						];
+						echo json_encode($response);
+					}
+				} else {
+					$data = [
+						'username' => $username,
+						'password' => $password,
+						'nama' => $this->input->post('nama'),
+						'tmp_tgl_lahir' => $this->input->post('tmp_tgl_lahir'),
+						'jenkel' => $this->input->post('jenkel'),
+						'agama' => $this->input->post('agama'),
+						'alamat' => $this->input->post('alamat'),
+						'no_tel' => $this->input->post('no_tel'),
+						'jabatan' => $this->input->post('jabatan'),
+						'password' => md5($password),
+						'alamat' => $this->input->post('alamat'),
+					];
+
+					$update = $this->karyawan_model->edit($id, $data);
+					if ($update == true) {
+						$response = [
+							'status' => 200
+						];
+						echo json_encode($response);
+					} else {
+						$response = [
+							'status' => 404,
+							'message' => 'Terjadi kesalahan'
+						];
+						echo json_encode($response);
+					}
+				}
+			} else {
+				$response = [
+					'status' => 404,
+					'message' => 'Username telah digunakan'
+				];
+				echo json_encode($response);
+			}
+		} else {
+			if ($password == '') {
+				$data = [
+					'username' => $username,
+					'password' => $password,
+					'nama' => $this->input->post('nama'),
+					'tmp_tgl_lahir' => $this->input->post('tmp_tgl_lahir'),
+					'jenkel' => $this->input->post('jenkel'),
+					'agama' => $this->input->post('agama'),
+					'alamat' => $this->input->post('alamat'),
+					'no_tel' => $this->input->post('no_tel'),
+					'jabatan' => $this->input->post('jabatan'),
+					'alamat' => $this->input->post('alamat'),
+				];
+
+				$update = $this->karyawan_model->edit($id, $data);
+				if ($update == true) {
+					$response = [
+						'status' => 200
+					];
+					echo json_encode($response);
+				} else {
+					$response = [
+						'status' => 404,
+						'message' => 'Terjadi kesalahan'
+					];
+					echo json_encode($response);
+				}
+			} else {
+				$data = [
+					'username' => $username,
+					'password' => $password,
+					'nama' => $this->input->post('nama'),
+					'tmp_tgl_lahir' => $this->input->post('tmp_tgl_lahir'),
+					'jenkel' => $this->input->post('jenkel'),
+					'agama' => $this->input->post('agama'),
+					'alamat' => $this->input->post('alamat'),
+					'no_tel' => $this->input->post('no_tel'),
+					'jabatan' => $this->input->post('jabatan'),
+					'password' => md5($password),
+					'alamat' => $this->input->post('alamat'),
+				];
+
+				$update = $this->karyawan_model->edit($id, $data);
+				if ($update == true) {
+					$response = [
+						'status' => 200
+					];
+					echo json_encode($response);
+				} else {
+					$response = [
+						'status' => 404,
+						'message' => 'Terjadi kesalahan'
+					];
+					echo json_encode($response);
+				}
+			}
+		}
+	}
+
+	public function getProfile()
+	{
+		$id = $this->input->get('id');
+		echo json_encode($this->karyawan_model->getKaryawanByUserId($id));
 	}
 }
 
