@@ -127,7 +127,6 @@ class Karyawan extends CI_Controller
 				if ($password == '') {
 					$data = [
 						'username' => $username,
-						'password' => $password,
 						'nama' => $this->input->post('nama'),
 						'tmp_tgl_lahir' => $this->input->post('tmp_tgl_lahir'),
 						'jenkel' => $this->input->post('jenkel'),
@@ -153,7 +152,6 @@ class Karyawan extends CI_Controller
 				} else {
 					$data = [
 						'username' => $username,
-						'password' => $password,
 						'nama' => $this->input->post('nama'),
 						'tmp_tgl_lahir' => $this->input->post('tmp_tgl_lahir'),
 						'jenkel' => $this->input->post('jenkel'),
@@ -190,7 +188,6 @@ class Karyawan extends CI_Controller
 			if ($password == '') {
 				$data = [
 					'username' => $username,
-					'password' => $password,
 					'nama' => $this->input->post('nama'),
 					'tmp_tgl_lahir' => $this->input->post('tmp_tgl_lahir'),
 					'jenkel' => $this->input->post('jenkel'),
@@ -217,7 +214,6 @@ class Karyawan extends CI_Controller
 			} else {
 				$data = [
 					'username' => $username,
-					'password' => $password,
 					'nama' => $this->input->post('nama'),
 					'tmp_tgl_lahir' => $this->input->post('tmp_tgl_lahir'),
 					'jenkel' => $this->input->post('jenkel'),
@@ -250,6 +246,12 @@ class Karyawan extends CI_Controller
 	{
 		$id = $this->input->get('id');
 		echo json_encode($this->karyawan_model->getKaryawanByUserId($id));
+	}
+
+	public function getAllKeterangan()
+	{
+		$id = $this->input->get('id');
+		echo json_encode($this->keterangan_model->getAllKeteranganByUserId($id));
 	}
 }
 

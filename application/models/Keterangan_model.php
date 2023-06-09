@@ -21,6 +21,14 @@ class Keterangan_model extends CI_Model
 			return false;
 		}
 	}
+
+	public function getAllKeteranganByUserId($id)
+	{
+		$this->db->select('*');
+		$this->db->from('tb_keterangan');
+		$this->db->where('id_karyawan', $id);
+		return $this->db->get()->result();
+	}
 }
 
 /* End of file Keterangan_model.php */
