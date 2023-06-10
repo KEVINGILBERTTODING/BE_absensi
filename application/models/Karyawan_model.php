@@ -53,6 +53,33 @@ class Karyawan_model extends CI_Model
 		$this->db->where('id_karyawan', $id);
 		return $this->db->get()->row_array();
 	}
+	public function getAllKaryawan()
+	{
+		$this->db->select('*');
+		$this->db->from('tb_karyawan');
+		return $this->db->get()->result();
+	}
+
+	public function insert($data)
+	{
+		$insert = $this->db->insert('tb_karyawan', $data);
+		if ($insert) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function delete($id)
+	{
+		$this->db->where('id_karyawan', $id);
+		$delete = $this->db->delete('tb_karyawan');
+		if ($delete) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 /* End of file Karyawan_model.php */

@@ -32,6 +32,16 @@ class Jabatan_model extends CI_Model
 		$this->db->from('tb_jabatan');
 		return $this->db->get()->result();
 	}
+
+	public function insert($data)
+	{
+		$insert = $this->db->insert('tb_jabatan', $data);
+		if ($insert) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 /* End of file Jabatan_model.php */

@@ -8,6 +8,8 @@ class Auth extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('karyawan_model');
+		$this->load->model('admin_model');
+
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -16,6 +18,7 @@ class Auth extends CI_Controller
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 		$validateKaryawan = $this->karyawan_model->auth($username, 'tb_karyawan');
+		$validateAdmin = $this->admin_model->validateUsername($username);
 		if ($validateKaryawan != null) {
 			if (md5($password) == $validateKaryawan['password']) {
 				$response = [
@@ -24,6 +27,22 @@ class Auth extends CI_Controller
 					'user_id' => $validateKaryawan['id_karyawan'],
 					'role' => 2,
 					'jabatan' => $validateKaryawan['jabatan']
+				];
+				echo json_encode($response);
+			} else {
+				$response = [
+					'status' => 404,
+					'message' => 'Password salah'
+				];
+				echo json_encode($response);
+			}
+		} else if ($validateAdmin != null) {
+			if ($validateAdmin['password'] == $password) {
+				$response = [
+					'status' => 200,
+					'user_id' => $validateAdmin['id'],
+					'role' => 1,
+					'nama' => $validateAdmin['username']
 				];
 				echo json_encode($response);
 			} else {
