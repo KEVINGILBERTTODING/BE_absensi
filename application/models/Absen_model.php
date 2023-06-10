@@ -29,6 +29,25 @@ class Absen_model extends CI_Model
 			return false;
 		}
 	}
+
+	public function getAllAbsensi()
+	{
+		$this->db->select('*');
+		$this->db->from('tb_absen');
+		$this->db->order_by('id', 'desc');
+		return $this->db->get()->result();
+	}
+
+	public function delete($id)
+	{
+		$this->db->where('id', $id);
+		$delete = $this->db->delete('tb_absen');
+		if ($delete) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 /* End of file Absen_model.php */

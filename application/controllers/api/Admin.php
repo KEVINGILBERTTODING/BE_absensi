@@ -27,6 +27,7 @@ class Admin extends CI_Controller
 		date_default_timezone_set('Asia/jakarta');
 		$this->load->model('karyawan_model');
 		$this->load->model('jabatan_model');
+		$this->load->model('absen_model');
 	}
 
 	public function getallkaryawan()
@@ -148,6 +149,28 @@ class Admin extends CI_Controller
 		$insert = $this->jabatan_model->insert($data);
 
 		if ($insert == true) {
+			$response = [
+				'status' => 200
+			];
+			echo json_encode($response);
+		} else {
+			$response = [
+				'status' => 404
+			];
+			echo json_encode($response);
+		}
+	}
+
+	public function getAllAbsensi()
+	{
+		echo json_encode($this->absen_model->getAllAbsensi());
+	}
+
+	public function deleteAbsen()
+	{
+		$id = $this->input->post('id');
+		$delete = $this->absen_model->delete($id);
+		if ($delete == true) {
 			$response = [
 				'status' => 200
 			];
