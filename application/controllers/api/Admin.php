@@ -28,6 +28,7 @@ class Admin extends CI_Controller
 		$this->load->model('karyawan_model');
 		$this->load->model('jabatan_model');
 		$this->load->model('absen_model');
+		$this->load->model('keterangan_model');
 	}
 
 	public function getallkaryawan()
@@ -181,6 +182,28 @@ class Admin extends CI_Controller
 			];
 			echo json_encode($response);
 		}
+	}
+
+	public function deleteIzin()
+	{
+		$id = $this->input->post('id');
+		$delete = $this->keterangan_model->delete($id);
+
+		if ($delete == true) {
+			$response = [
+				'status' => 200
+			];
+			echo json_encode($response);
+		} else {
+			$response = [
+				'status' => 404
+			];
+			echo json_encode($response);
+		}
+	}
+	public function getAllIzin()
+	{
+		echo json_encode($this->keterangan_model->getAllKeterangan());
 	}
 }
 
