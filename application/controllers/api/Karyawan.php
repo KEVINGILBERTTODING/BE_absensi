@@ -28,6 +28,8 @@ class Karyawan extends CI_Controller
 		$data = [
 			'id_karyawan' => $this->input->post('id_karyawan'),
 			'nama' => $this->input->post('nama'),
+			'created_at' => date('Y-m-d H:i:s'),
+			'jenis' => $this->input->post('jenis'),
 			'waktu' => $this->input->post('waktu')
 		];
 
@@ -90,6 +92,7 @@ class Karyawan extends CI_Controller
 				'keterangan' => $this->input->post('keterangan'),
 				'alasan' => $this->input->post('alasan'),
 				'waktu' => $this->input->post('waktu'),
+				'created_at' => date('Y-m-d H:i:s'),
 				'bukti' => $file_name
 			];
 
@@ -252,6 +255,11 @@ class Karyawan extends CI_Controller
 	{
 		$id = $this->input->get('id');
 		echo json_encode($this->keterangan_model->getAllKeteranganByUserId($id));
+	}
+
+	function checkAbsen()
+	{
+		echo json_encode($this->absen_model->checkStatusAbsent($this->input->get('id')));
 	}
 }
 

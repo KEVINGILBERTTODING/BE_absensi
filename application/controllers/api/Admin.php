@@ -205,6 +205,19 @@ class Admin extends CI_Controller
 	{
 		echo json_encode($this->keterangan_model->getAllKeterangan());
 	}
+
+	function rekap_absen($dateStart, $dateEnd)
+	{
+
+		$data['dateStart'] = $dateStart;
+		$data['dateEnd'] = $dateEnd;
+		$data['absen'] = $this->absen_model->rekapAbsen($dateStart, $dateEnd);
+
+		$this->load->library('pdflib');
+		$this->pdflib->setFileName('rekap_absensi_.pdf');
+		$this->pdflib->setPaper('A4', 'potrait');
+		$this->pdflib->loadView('v_report', $data);
+	}
 }
 
 
