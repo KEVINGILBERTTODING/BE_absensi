@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2023 at 09:11 AM
+-- Generation Time: Jul 04, 2023 at 10:42 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -31,27 +31,18 @@ CREATE TABLE `tb_absen` (
   `id` int(11) NOT NULL,
   `id_karyawan` varchar(255) NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `waktu` varchar(255) NOT NULL
+  `waktu` varchar(255) NOT NULL,
+  `jenis` char(50) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_absen`
 --
 
-INSERT INTO `tb_absen` (`id`, `id_karyawan`, `nama`, `waktu`) VALUES
-(16, '1920392912', 'Budi Sanjaya', 'Thursday, 10-09-2020 07:52:25 am'),
-(17, '192', 'Sarah Mutia', 'Thursday, 10-09-2020 07:54:45 am'),
-(18, '9', 'Abdul Muhlisin Sudirman', 'Sunday, 20-09-2020 01:31:05 pm'),
-(21, '1920392912', 'Budi Sanjaya', 'Thursday, 08-06-2023 06:24:22 pm'),
-(22, '1920392912', 'Budi Sanjaya', 'Thursday, 08-06-2023 06:27:21 pm'),
-(23, '1920392912', 'Budi Sanjaya', 'Thursday, 08-06-2023 06:45:03 pm'),
-(24, '1920392912', 'Budi Sanjaya', 'Thursday, 08-06-2023 06:45:08 pm'),
-(25, '1920392912', 'Budi Sanjaya', 'Thursday, 08-06-2023 11:46:36 pm'),
-(26, '1920392912', 'Budi Sanjaya', 'Friday, 09-06-2023 12:36:51 AM'),
-(27, '1920392912', 'Budi Sanjaya', 'Friday, 09-06-2023 12:37:42 AM'),
-(28, '1920392912', 'Budi Sanjaya', 'Friday, 09-06-2023 10:28:43 AM'),
-(31, '3232323', 'kevin gilbert toding', 'Saturday, 10-06-2023 10:32:52 AM'),
-(32, '1920392912', 'Budi Sanjaya', 'Saturday, 10-06-2023 01:46:06 PM');
+INSERT INTO `tb_absen` (`id`, `id_karyawan`, `nama`, `waktu`, `jenis`, `created_at`) VALUES
+(49, '3232323', 'Katon', 'Wednesday, 05-07-2023 02:26:17 AM', 'Datang', '2023-07-04 19:26:21'),
+(50, '3232323', 'Katon', 'Wednesday, 05-07-2023 02:26:17 AM', 'Pulang', '2023-07-04 19:26:32');
 
 -- --------------------------------------------------------
 
@@ -142,19 +133,9 @@ CREATE TABLE `tb_keterangan` (
   `keterangan` varchar(255) NOT NULL,
   `alasan` text NOT NULL,
   `waktu` varchar(255) NOT NULL,
-  `bukti` varchar(50) NOT NULL
+  `bukti` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tb_keterangan`
---
-
-INSERT INTO `tb_keterangan` (`id`, `id_karyawan`, `nama`, `keterangan`, `alasan`, `waktu`, `bukti`) VALUES
-(52, '999999999', 'bagas a', 'Izin', 'Mohon maaf bapak / ibu, untuk hari ini saya tidak bisa hadir, dikarenakan saya izin.', 'Thursday, 10-09-2020 07:55:20 am', '10092020025619suratket2.jpg'),
-(53, '1920392912', 'Budi Sanjaya', 'Sakit', 'adada', 'Friday, 09-06-2023 12:45:41 am', '08062023194552Screenshot 2023-03-01 213307.png'),
-(54, '1920392912', 'Budi Sanjaya', 'Sakit', 'kurang enak badan', 'Friday, 09-06-2023 02:33:48 AM', 'ACE2.png'),
-(55, '1920392912', 'Budi Sanjaya', 'Izin', 'ydydyd', 'Friday, 09-06-2023 02:36:50 AM', 'my_av.png'),
-(56, '1920392912', 'Budi Sanjaya', 'Sakit', 'Sakit flu berat', 'Saturday, 10-06-2023 01:46:06 PM', 'my_av1.png');
 
 --
 -- Indexes for dumped tables
@@ -198,7 +179,7 @@ ALTER TABLE `tb_keterangan`
 -- AUTO_INCREMENT for table `tb_absen`
 --
 ALTER TABLE `tb_absen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `tb_daftar`
